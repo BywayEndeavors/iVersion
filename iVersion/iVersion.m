@@ -1260,8 +1260,8 @@ static NSString *const iVersionMacAppStoreURLFormat = @"macappstore://itunes.app
     {
         NSLog(@"iVersion will open the App Store using the following URL: %@", self.updateURL);
     }
-    
-    [[UIApplication sharedApplication] openURL:self.updateURL];
+
+	[UIApplication.sharedApplication openURL:self.updateURL options:@{} completionHandler:nil];
     return YES;
 }
 
@@ -1276,8 +1276,9 @@ static NSString *const iVersionMacAppStoreURLFormat = @"macappstore://itunes.app
 
 - (void)resizeAlertView:(UIAlertView *)alertView
 {
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone &&
-        UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation) &&
+	UIInterfaceOrientation interfaceOrientation = UIApplication.sharedApplication.windows.firstObject.windowScene.interfaceOrientation;
+    if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPhone &&
+        UIInterfaceOrientationIsLandscape(interfaceOrientation) &&
         [[UIDevice currentDevice].systemVersion floatValue] < 7.0f)
     {
         CGFloat max = alertView.window.bounds.size.height - alertView.frame.size.height - 10.0f;
